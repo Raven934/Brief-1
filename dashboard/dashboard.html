@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="dashboad.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../shared.css">
 </head>
 <body>
     <header>
@@ -105,7 +106,7 @@
                 <h2><i class="fa-solid fa-bell" style="color: #006a72;"></i> Notifications importantes</h2>
                 <div class="notification-controls">
                     <button class="carousel-control-prev" type="button" data-bs-target="#notificationCarousel" data-bs-slide="prev">
-                        <i class="fa-solid fa-chevron-left" style="color: #006a72;"></i>
+                        <i class="fa-solid fa-chevron-left" style="color: #36979e;"></i>
                         <span class="visually-hidden">Précédent</span>
                     </button>
                     <span class="notification-counter">
@@ -116,12 +117,12 @@
                         </span>
                     </span>
                     <button class="carousel-control-next" type="button" data-bs-target="#notificationCarousel" data-bs-slide="next">
-                        <i class="fa-solid fa-chevron-right" style="color: #006a72;"></i>
+                        <i class="fa-solid fa-chevron-right" style="color: #36979e;"></i>
                         <span class="visually-hidden">Suivant</span>
                     </button>
                 </div>
             </div>
-            <div id="notificationCarousel" class="carousel slide" data-bs-ride="false">
+            <div id="notificationCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="notification-box">
@@ -287,7 +288,7 @@
           <div class="footer-section">
             <h3>Informations de contact</h3>
             <div class="contact-info">
-              <p><i class="fas fa-map-marker-alt"></i> Situé au 109, boulevard Abdelmoumen, 20042 Casablanca.</p>
+              <p><i class="fas fa-map-marker-alt"></i>Boulevard Abdelmoumen, Casablanca.</p>
               <p><i class="fas fa-phone"></i> +212 6567839878</p>
               <p><i class="fas fa-envelope"></i> info@flexidays.com</p>
             </div>
