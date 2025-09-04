@@ -62,7 +62,6 @@ main {
 .notification-controls {
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 
 .carousel-control-prev, .carousel-control-next {
@@ -92,7 +91,7 @@ main {
 }
 
 .carousel-indicators-custom {
-  display: flex;
+  display: none;
   gap: 8px;
   align-items: center;
 }
