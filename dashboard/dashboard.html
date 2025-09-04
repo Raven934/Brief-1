@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexiDays - Tableau de bord</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="dashboad.css">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">FlexiDays.</div>
+        <nav>
+            <a href="../dashboard/Dashboard.html" class="active">Tableau de bord</a>
+            <a href="../myleaves/leaves.html">Mes congés</a>
+            <a href="../requests/demand.html">Demande de congé</a>
+            <a href="../admin/admin.html">Administration</a>
+        </nav>
+        <div class="icons">
+            <div class="dropdown">
+                <button class="avatar dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-user" style="color: #F8F9FA;"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><h6 class="dropdown-header"><i class="fa-solid fa-user me-2"></i>Jean Dupont</h6></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-id-card me-2"></i>Mon profil</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Paramètres</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clock me-2"></i>Historique</a></li>
+                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-question-circle me-2"></i>Aide</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-sign-out-alt me-2"></i>Déconnexion</a></li>
+                </ul>
+            </div>
+
+            <div class="dropdown">
+                <button class="notifs dropdown-toggle position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-bell" style="color: #F8F9FA;"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        3
+                        <span class="visually-hidden">notifications non lues</span>
+                    </span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><h6 class="dropdown-header">Notifications récentes</h6></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fa-solid fa-check-circle text-success me-2"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Congé approuvé</h6>
+                                    <p class="mb-1 small text-muted">Votre demande du 15-20 oct a été approuvée</p>
+                                    <small class="text-muted">Il y a 2 heures</small>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fa-solid fa-exclamation-triangle text-warning me-2"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Rappel</h6>
+                                    <p class="mb-1 small text-muted">N'oubliez pas de soumettre votre rapport</p>
+                                    <small class="text-muted">Il y a 4 heures</small>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fa-solid fa-info-circle text-info me-2"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-1">Mise à jour système</h6>
+                                    <p class="mb-1 small text-muted">Nouvelle version disponible</p>
+                                    <small class="text-muted">Hier</small>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-center" href="#"><i class="fa-solid fa-eye me-2"></i>Voir toutes les notifications</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="center">
+            <h1 class="page-title">Tableau de bord.</h1>
+        
+        <section class="notifications">
+            <div class="notification-header">
+                <h2><i class="fa-solid fa-bell" style="color: #006a72;"></i> Notifications importantes</h2>
+                <div class="notification-controls">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#notificationCarousel" data-bs-slide="prev">
+                        <i class="fa-solid fa-chevron-left" style="color: #006a72;"></i>
+                        <span class="visually-hidden">Précédent</span>
+                    </button>
+                    <span class="notification-counter">
+                        <span class="carousel-indicators-custom">
+                            <button type="button" data-bs-target="#notificationCarousel" data-bs-slide-to="0" class="active"></button>
+                            <button type="button" data-bs-target="#notificationCarousel" data-bs-slide-to="1"></button>
+                            <button type="button" data-bs-target="#notificationCarousel" data-bs-slide-to="2"></button>
+                        </span>
+                    </span>
+                    <button class="carousel-control-next" type="button" data-bs-target="#notificationCarousel" data-bs-slide="next">
+                        <i class="fa-solid fa-chevron-right" style="color: #006a72;"></i>
+                        <span class="visually-hidden">Suivant</span>
+                    </button>
+                </div>
+            </div>
+            <div id="notificationCarousel" class="carousel slide" data-bs-ride="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="notification-box">
+                            <p><strong>⚠ Avis de fermeture !!</strong></p>
+                            <p>
+                                Veuillez noter que l'entreprise fermera ses portes pour maintenance 
+                                à partir du <strong>2 septembre 2025</strong>. 
+                                Veuillez vous assurer de planifier vos congés à l'avance.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="notification-box">
+                            <p><strong>🎉 Nouvelle politique de congés !!</strong></p>
+                            <p>
+                                À partir du <strong>1er octobre 2025</strong>, tous les employés bénéficieront 
+                                de <strong>5 jours de congés supplémentaires</strong> par an. 
+                                Consultez votre gestionnaire RH pour plus de détails.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="notification-box">
+                            <p><strong>📅 Rappel important !!</strong></p>
+                            <p>
+                                N'oubliez pas de soumettre vos demandes de congés pour les fêtes de fin d'année 
+                                avant le <strong>15 novembre 2025</strong>. 
+                                Les demandes tardives ne pourront pas être garanties.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+        
+        <section class="main-content">
+            <div class="left-card">
+                <div class="balance">
+                    <div id="leave">
+                        <h2>Solde de congés</h2>
+                        <h3><i class="fa-solid fa-calendar" style="color: #006a72;"></i></h3>
+                    </div>
+
+                    <div class="leave-type">
+                        <div class="label">
+                            <h3>Congés annuels</h3>
+                            <p class="days-left">11 jours restants</p>
+                        </div>
+                        <progress value="9" max="20"></progress>
+                        <div class="usage">9/20 (45% utilisés)</div>
+                    </div>
+
+                    <div class="leave-type">
+                        <div class="label">
+                            <h3>Congés maladie</h3>
+                            <p class="days-left">3 jours restants</p>
+                        </div>
+                        <progress value="7" max="10"></progress>
+                        <div class="usage">7/10 (71% utilisés)</div>
+                    </div>
+
+                    <div class="leave-type">
+                        <div class="label">
+                            <h3>Congés personnels</h3>
+                            <p class="days-left">2 jours restants</p>
+                        </div>
+                        <progress value="6" max="8"></progress>
+                        <div class="usage">6/8 (62% utilisés)</div>
+                    </div>
+                </div>
+                <div class="requests">
+                    <div class="on-going">
+                        <h2>Demandes en cours</h2>
+                        <h4></h4>
+                    </div>
+                    <div class="req">
+                        <p>En attente… </p>
+                        <p class="num"><i class="fa-solid fa-1" style="color: #006a72;"></i></p>
+                    </div>
+                    <div class="req">
+                        <p>Approuvées.</p>
+                        <p class="num"><i class="fa-solid fa-4" style="color: #006a72;"></i></p>
+                    </div>
+                    <div class="req"> 
+                        <p>Refusées. </p>
+                        <p class="num"><i class="fa-solid fa-2" style="color: #006a72;"></i></p>
+                    </div>
+                </div>
+            </div>
+            <div class="right-card">
+                <div class="upcoming-list">
+                    <div class="up-coming">
+                        <h2>Congés à venir</h2>
+                        <h4><i class="fa-solid fa-plane" style="color: #006a72;"></i></h4>
+                    </div>
+                    <div class="events">
+                        <h3>Congés d'hiver</h3>
+                        <p>10–30 janvier 2026</p>
+                    </div>
+                    <div class="events">
+                        <h3>10e anniversaire</h3>
+                        <p>17–20 mai 2026</p>
+                    </div>
+                    <div class="events">
+                        <h3>10e anniversaire</h3>
+                        <p>17–20 mai 2026</p>
+                    </div>
+                    <div class="events">
+                        <h3>10e anniversaire</h3>
+                        <p>17–20 mai 2026</p>
+                    </div>
+                    <div class="events">
+                        <h3>Aucun congé à venir…</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="buttons">
+            <button><i class="fa-solid fa-plus" style="color: #006a72;"></i> Nouvelle demande</button>
+            <button><i class="fa-solid fa-list-ul" style="color: #006a72;"></i> Mes congés</button>
+            <button><i class="fa-solid fa-chart-simple" style="color: #006a72;"></i> Statistiques</button>
+            <button><i class="fa-solid fa-sliders" style="color: #006a72;"></i> Paramètres</button>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Gestion RH</h3>
+            <p>
+              Simplifier la gestion des congés des employés et les processus RH pour les entreprises modernes.
+            </p>
+            <div class="social-links">
+              <a href="facebook"><i class="fab fa-facebook"></i></a>
+              <a href="twitter"><i class="fab fa-twitter"></i></a>
+              <a href="linkedin"><i class="fab fa-linkedin"></i></a>
+              <a href="instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h3>Liens rapides</h3>
+            <ul>
+              <li><a href="../dashboard/dashboard.html">Tableau de bord</a></li>
+              <li><a href="leaves.html">Mes congés</a></li>
+              <li><a href="../requests/demand.html">Demandes de congé</a></li>
+              <li><a href="../admin/admin.html">Administration</a></li>
+            
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+              <li><a href="help">Centre d'aide</a></li>
+              <li><a href="guide">Guide utilisateur</a></li>
+              <li><a href="contact">Contacter le support</a></li>
+              <li><a href="issue">Signaler un problème</a></li>
+              
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3>Informations de contact</h3>
+            <div class="contact-info">
+              <p><i class="fas fa-map-marker-alt"></i> Situé au 109, boulevard Abdelmoumen, 20042 Casablanca.</p>
+              <p><i class="fas fa-phone"></i> +212 6567839878</p>
+              <p><i class="fas fa-envelope"></i> info@flexidays.com</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 FlexiDays. Tous droits réservés. | <a href="#">Politique de confidentialité</a> |
+            <a href="#">Conditions d'utilisation</a>
+          </p>
+        </div>
+      </footer>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
