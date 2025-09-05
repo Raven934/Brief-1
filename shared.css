@@ -327,9 +327,13 @@ footer {
     flex: 1;
   }
   nav {
-    flex: 1;
     order: 3;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
     width: 100%;
+    margin-top: 0.5rem;
   }
   .icons {
     flex-shrink: 0;
