@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../shared.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <header>
@@ -20,142 +21,68 @@
             <a href="../admin/admin.html">Administration</a>
         </nav>
         <div class="icons">
-            <div class="dropdown">
-                <button class="avatar dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-user" style="color: #F8F9FA;"></i>
+            <div class="avatar-wrapper">
+                <button id="avatarBtn" class="avatar-btn" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-user"></i>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><h6 class="dropdown-header"><i class="fa-solid fa-user me-2"></i>Jean Dupont</h6></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-id-card me-2"></i>Mon profil</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Paramètres</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-clock me-2"></i>Historique</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-question-circle me-2"></i>Aide</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-sign-out-alt me-2"></i>Déconnexion</a></li>
-                </ul>
+                <div id="avatarPanel" class="avatar-panel" hidden>
+                    <div class="avatar-header">
+                        <div class="avatar-circle"><i class="fa-solid fa-user"></i></div>
+                        <div class="avatar-info">
+                            <h6 id="avatarName">Jean Dupont</h6>
+                            <p id="avatarEmail">jean.dupont@exemple.com</p>
+                        </div>
+                    </div>
+                    <ul class="avatar-menu" id="avatarMenu">
+                        <li data-action="profile"><i class="fa-solid fa-id-card"></i> Mon profil</li>
+                        <li data-action="settings"><i class="fa-solid fa-gear"></i> Paramètres</li>
+                        <li data-action="history"><i class="fa-solid fa-clock"></i> Historique</li>
+                        <li data-action="help"><i class="fa-solid fa-question-circle"></i> Aide</li>
+                        <li class="danger" data-action="logout"><i class="fa-solid fa-sign-out-alt"></i> Déconnexion</li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="dropdown">
-                <button class="notifs dropdown-toggle position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-bell" style="color: #F8F9FA;"></i>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        3
-                        <span class="visually-hidden">notifications non lues</span>
-                    </span>
+            <div class="notif-wrapper">
+                <button id="notifBtn" class="notif-btn" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-bell"></i>
+                    <span id="notifBadge" class="notif-badge" hidden>0</span>
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li><h6 class="dropdown-header">Notifications récentes</h6></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <i class="fa-solid fa-check-circle text-success me-2"></i>
-                                </div>
-                                <div>
-                                    <h6 class="mb-1">Congé approuvé</h6>
-                                    <p class="mb-1 small text-muted">Votre demande du 15-20 oct a été approuvée</p>
-                                    <small class="text-muted">Il y a 2 heures</small>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <i class="fa-solid fa-exclamation-triangle text-warning me-2"></i>
-                                </div>
-                                <div>
-                                    <h6 class="mb-1">Rappel</h6>
-                                    <p class="mb-1 small text-muted">N'oubliez pas de soumettre votre rapport</p>
-                                    <small class="text-muted">Il y a 4 heures</small>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <div class="d-flex">
-                                <div class="flex-shrink-0">
-                                    <i class="fa-solid fa-info-circle text-info me-2"></i>
-                                </div>
-                                <div>
-                                    <h6 class="mb-1">Mise à jour système</h6>
-                                    <p class="mb-1 small text-muted">Nouvelle version disponible</p>
-                                    <small class="text-muted">Hier</small>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-center" href="#"><i class="fa-solid fa-eye me-2"></i>Voir toutes les notifications</a></li>
-                </ul>
+                <div id="notifPanel" class="notif-panel" hidden>
+                    <div class="notif-panel-header">
+                        <span>Notifications</span>
+                        <button id="markAllRead" class="mark-all">Tout marquer lu</button>
+                    </div>
+                    <ul id="notifList" class="notif-list"></ul>
+                    <div class="notif-footer"><button id="viewAllNotifs" class="view-all">Voir tout</button></div>
+                </div>
             </div>
         </div>
     </header>
     <main>
         <div class="center">
             <h1 class="page-title">Tableau de bord</h1>
-        
         <section class="notifications">
             <div class="notification-header">
                 <h2><i class="fa-solid fa-bell" style="color: #006a72;"></i> Notifications importantes</h2>
-                <div class="notification-controls">
-                    <button class="carousel-control-prev" type="button" data-bs-target="#notificationCarousel" data-bs-slide="prev">
-                        <i class="fa-solid fa-chevron-left" style="color: #36979e;"></i>
-                        <span class="visually-hidden">Précédent</span>
-                    </button>
-                    <span class="notification-counter">
-                        <span class="carousel-indicators-custom">
-                            <button type="button" data-bs-target="#notificationCarousel" data-bs-slide-to="0" class="active"></button>
-                            <button type="button" data-bs-target="#notificationCarousel" data-bs-slide-to="1"></button>
-                            <button type="button" data-bs-target="#notificationCarousel" data-bs-slide-to="2"></button>
-                        </span>
-                    </span>
-                    <button class="carousel-control-next" type="button" data-bs-target="#notificationCarousel" data-bs-slide="next">
-                        <i class="fa-solid fa-chevron-right" style="color: #36979e;"></i>
-                        <span class="visually-hidden">Suivant</span>
-                    </button>
+                    <div class="notification-controls">
+                <button class="carousel-control-prev" type="button" id="prevBtn">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="carousel-indicators-custom">
+                   
+                </div>
+                <button class="carousel-control-next" type="button" id="nextBtn">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+            </div>
+            <div id="notificationSlider" class="notification-slider">
+                <div class="slider-container">
+                    
                 </div>
             </div>
-            <div id="notificationCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="notification-box">
-                            <p><strong>⚠ Avis de fermeture !!</strong></p>
-                            <p>
-                                Veuillez noter que l'entreprise fermera ses portes pour maintenance 
-                                à partir du <strong>2 septembre 2025</strong>. 
-                                Veuillez vous assurer de planifier vos congés à l'avance.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="notification-box">
-                            <p><strong>🎉 Nouvelle politique de congés !!</strong></p>
-                            <p>
-                                À partir du <strong>1er octobre 2025</strong>, tous les employés bénéficieront 
-                                de <strong>5 jours de congés supplémentaires</strong> par an. 
-                                Consultez votre gestionnaire RH pour plus de détails.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="notification-box">
-                            <p><strong>📅 Rappel important !!</strong></p>
-                            <p>
-                                N'oubliez pas de soumettre vos demandes de congés pour les fêtes de fin d'année 
-                                avant le <strong>15 novembre 2025</strong>. 
-                                Les demandes tardives ne pourront pas être garanties.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        
         </section>
         </div>
         
@@ -167,31 +94,31 @@
                         <h3><i class="fa-solid fa-calendar" style="color: #006a72;"></i></h3>
                     </div>
 
-                    <div class="leave-type">
+                    <div class="leave-type1">
                         <div class="label">
                             <h3>Congés annuels</h3>
                             <p class="days-left" style="color: #0069715a;">11 jours restants</p>
                         </div>
                         <progress value="9" max="20"></progress>
-                        <div class="usage">9/20 (45% utilisés)</div>
+                        <div class="usage"></div>
                     </div>
 
-                    <div class="leave-type">
+                    <div class="leave-type2">
                         <div class="label">
                             <h3>Congés maladie</h3>
                             <p class="days-left" style="color: #0069715a;">3 jours restants</p>
                         </div>
                         <progress value="7" max="10"></progress>
-                        <div class="usage">7/10 (71% utilisés)</div>
+                        <div class="usage"></div>
                     </div>
 
-                    <div class="leave-type">
+                    <div class="leave-type3">
                         <div class="label">
                             <h3>Congés personnels</h3>
                             <p class="days-left" style="color: #0069715a;">2 jours restants</p>
                         </div>
                         <progress value="6" max="8"></progress>
-                        <div class="usage">6/8 (62% utilisés)</div>
+                        <div class="usage"></div>
                     </div>
                 </div>
                 <div class="requests">

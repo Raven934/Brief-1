@@ -1,0 +1,66 @@
+{
+  "leaves": [
+    { "id": 1, "type": "Payé", "startDate": "2025-10-10", "endDate": "2025-10-20", "status": "Approuvé" },
+    { "id": 2, "type": "Maladie", "startDate": "2025-11-05", "endDate": "2025-11-07", "status": "En attente" },
+    { "id": 3, "type": "Payé", "startDate": "2025-12-18", "endDate": "2025-12-22", "status": "Approuvé" },
+    { "id": 4, "type": "Personnel", "startDate": "2025-09-20", "endDate": "2025-09-21", "status": "Approuvé" },
+    { "id": 5, "type": "Maladie", "startDate": "2025-08-01", "endDate": "2025-08-03", "status": "Approuvé" },
+    { "id": 6, "type": "Personnel", "startDate": "2025-11-15", "endDate": "2025-11-16", "status": "En attente" }
+  ],
+  "employees": [
+    { "id": 1, "name": "Jean Dupont", "email": "jean.dupont@exemple.com", "position": "Développeur" },
+    { "id": 2, "name": "Marie Martin", "email": "marie.martin@exemple.com", "position": "Chef de projet" },
+    { "id": 3, "name": "Pierre Durand", "email": "pierre.durand@exemple.com", "position": "Designer" },
+    { "id": 4, "name": "Sophie Bernard", "email": "sophie.bernard@exemple.com", "position": "Analyste" }
+  ],
+  "requests": [
+    { "id": 1, "employeeId": 1, "leaveId": 2, "reason": "Je ne me sens pas bien", "status": "En attente" },
+    { "id": 2, "employeeId": 2, "leaveId": 1, "reason": "Vacances", "status": "Approuvé" },
+    { "id": 3, "employeeId": 3, "leaveId": 3, "reason": "Congés de fin d'année", "status": "Approuvé" },
+    { "id": 4, "employeeId": 1, "leaveId": 4, "reason": "Rendez-vous médical", "status": "En attente" },
+    { "id": 5, "employeeId": 4, "leaveId": 5, "reason": "Grippe", "status": "Refusé" },
+    { "id": 6, "employeeId": 2, "leaveId": 6, "reason": "Affaires personnelles", "status": "En attente" },
+    { "id": 7, "employeeId": 3, "leaveId": 1, "reason": "Voyage familial", "status": "Approuvé" }
+  ],
+  "notifications": [
+    { "id": 1, "userId": 1, "message": "Votre demande de congé a été approuvée.", "read": false },
+    { "id": 2, "userId": 2, "message": "Nouvelle demande de congé de Jean Dupont.", "read": true },
+    { "id": 3, "userId": 3, "message": "Votre demande de congé a été refusée.", "read": false },
+    { "id": 4, "userId": 1, "message": "Rappel: Soumettez vos congés avant le 15 novembre.", "read": false }
+  ],
+  "settings": {
+    "theme": "sombre",
+    "notifications": {
+      "email": true,
+      "push": false
+    }
+  },
+  "annonces": [
+    {
+      "id": 1,
+      "title": "⚠ Avis de fermeture !!",
+      "content": "Veuillez noter que l'entreprise fermera ses portes pour maintenance à partir du <strong>2 septembre 2025</strong>. Veuillez vous assurer de planifier vos congés à l'avance."
+    },
+    {
+      "id": 2,
+      "title": "🎉 Nouvelle politique de congés !!",
+      "content": "À partir du <strong>1er octobre 2025</strong>, tous les employés bénéficieront de <strong>5 jours de congés supplémentaires</strong> par an. Consultez votre gestionnaire RH pour plus de détails."
+    },
+    {
+      "id": 3,
+      "title": "📅 Rappel important !!",
+      "content": "La date limite pour soumettre vos demandes de congés pour la période des fêtes est le <strong>15 novembre 2025</strong>. Aucune demande ne sera acceptée après cette date."
+    }
+  ],
+  "entitlements": [
+    { "type": "Payé", "total": 20 },
+    { "type": "Maladie", "total": 10 },
+    { "type": "Personnel", "total": 8 }
+  ],
+  "events": [
+    { "id": 1, "name": "Congés d'hiver", "startDate": "2026-01-10", "endDate": "2026-01-30", "type": "Payé" },
+    { "id": 2, "name": "10e anniversaire", "startDate": "2026-05-17", "endDate": "2026-05-20", "type": "Personnel" },
+    { "id": 3, "name": "Team building", "startDate": "2025-10-05", "endDate": "2025-10-06", "type": "Payé" },
+    { "id": 4, "name": "Formation interne", "startDate": "2025-11-12", "endDate": "2025-11-12", "type": "Payé" }
+  ]
+}
