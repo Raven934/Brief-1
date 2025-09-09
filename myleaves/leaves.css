@@ -455,6 +455,29 @@ main {
     transform: translateY(0) scale(1.05);
 }
 
+/* Disabled button styles */
+.action-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+    background: #ccc;
+    color: #666;
+}
+
+.action-btn:disabled::before {
+    display: none;
+}
+
+.modify-btn:disabled {
+    background: #ccc;
+    color: #666;
+}
+
+.delete-btn:disabled {
+    background: #ccc;
+    color: #666;
+}
+
 
 .requests-table tbody tr {
     transition: all 0.3s ease;

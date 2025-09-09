@@ -162,11 +162,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 <div class="action-buttons" style="display: flex; gap: 0.5rem; justify-content: center;">
                                     <button class="action-btn modify-btn" title="Modifier" 
                                             onclick="modifyRequest('LR${request.id.toString().padStart(3, '0')}')"
-                                            ${request.status === 'Approuvé' ? 'disabled' : ''}>
+                                            ${request.status !== 'En attente' ? 'disabled' : ''}>
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
                                     <button class="action-btn delete-btn" title="Supprimer" 
-                                            onclick="deleteRequest('LR${request.id.toString().padStart(3, '0')}')">
+                                            onclick="deleteRequest('LR${request.id.toString().padStart(3, '0')}')"
+                                            ${request.status !== 'En attente' ? 'disabled' : ''}>
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
@@ -287,9 +288,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-        
-            if (request.status === 'Approuvé') {
-                showNotification('Impossible de modifier un congé déjà approuvé', 'warning');
+            // Check if modification is allowed (only pending requests)
+            if (request.status !== 'En attente') {
+                showNotification('Seules les demandes en attente peuvent être modifiées', 'warning');
                 return;
             }
 
@@ -433,29 +434,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.deleteRequest = async (requestId) => {
         console.log('Suppression de la demande:', requestId);
         
-    
-        const numericId = parseInt(requestId.replace('LR', ''));
+        const targetId = requestId.replace('LR', '').replace(/^0+/, '');
         
-       
-        const confirmHTML = `
-            <div class="modal-overlay" id="confirmModal">
-                <div class="modal-content confirm-modal">
-                    <div class="modal-header">
-                        <h3>Confirmer la suppression</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>Êtes-vous sûr de vouloir supprimer la demande ${requestId} ?</p>
-                        <p class="warning-text">Cette action est irréversible.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn-secondary" onclick="closeConfirmModal()">Annuler</button>
-                        <button class="btn-danger" onclick="confirmDelete(${numericId})">Supprimer</button>
+        try {
+            // First, check if the request can be deleted
+            const { data: requests } = await axios.get('http://localhost:3000/requests');
+            const request = requests.find(r => {
+                return r.id == targetId || r.id === targetId || r.id === parseInt(targetId);
+            });
+            
+            if (!request) {
+                showNotification('Congé non trouvé', 'error');
+                return;
+            }
+
+            // Check if deletion is allowed (only pending requests)
+            if (request.status !== 'En attente') {
+                showNotification('Seules les demandes en attente peuvent être supprimées', 'warning');
+                return;
+            }
+            
+            const numericId = parseInt(requestId.replace('LR', ''));
+            
+            // Show confirmation modal
+            const confirmHTML = `
+                <div class="modal-overlay" id="confirmModal">
+                    <div class="modal-content confirm-modal">
+                        <div class="modal-header">
+                            <h3>Confirmer la suppression</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>Êtes-vous sûr de vouloir supprimer la demande ${requestId} ?</p>
+                            <p class="warning-text">Cette action est irréversible.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn-secondary" onclick="closeConfirmModal()">Annuler</button>
+                            <button class="btn-danger" onclick="confirmDelete('${targetId}')">Supprimer</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
 
-        document.body.insertAdjacentHTML('beforeend', confirmHTML);
+            document.body.insertAdjacentHTML('beforeend', confirmHTML);
+            
+        } catch (error) {
+            console.error('Erreur lors de la vérification:', error);
+            showNotification('Erreur lors de la vérification des données', 'error');
+        }
     };
 
     /* -------------------- CLOSE CONFIRM MODAL -------------------- */
