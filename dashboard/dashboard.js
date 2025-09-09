@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* -------------------- FETCH: ANNOUNCES -------------------- */
     const loadAnnonces = async () => {
         try {
-            const { data } = await axios.get('http://localhost:4000/annonces');
+            const { data } = await axios.get('http://localhost:3000/annonces');
             state.items = data;
             render();
             wireControls();
@@ -77,8 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadAnnonces();
 
-    const ENTITLEMENTS = { 'Payé': 20, 'Maladie': 10, 'Personnel': 8 };
-
     /* -------------------- LEAVES: DAY DIFFERENCE (INCLUSIVE) -------------------- */
     const dayDiff = (start, end) => {
         const s = new Date(start);
@@ -89,12 +87,41 @@ document.addEventListener('DOMContentLoaded', () => {
     /* -------------------- LEAVES: FETCH & UPDATE BALANCE -------------------- */
     const loadLeavesAndUpdateBalance = async () => {
         try {
-            const { data: leaves } = await axios.get('http://localhost:4000/leaves');
-            const usage = { 'Payé': 0, 'Maladie': 0, 'Personnel': 0 };
-            leaves.forEach(l => {
-                if (usage[l.type] != null && l.status === 'Approuvé') usage[l.type] += dayDiff(l.startDate, l.endDate);
+            const { data: requests } = await axios.get('http://localhost:3000/requests');
+            const { data: entitlements } = await axios.get('http://localhost:3000/entitlements');
+            const { data: currentUser } = await axios.get('http://localhost:3000/currentUser');
+            
+            const ENTITLEMENTS = {};
+            entitlements.forEach(ent => {
+                ENTITLEMENTS[ent.type] = ent.total;
             });
 
+            const currentYear = new Date().getFullYear();
+            const currentUserRequests = requests.filter(r => {
+                const startDate = new Date(r.startDate);
+                return startDate.getFullYear() === currentYear && 
+                       r.status === 'Approuvé' && 
+                       r.employeeId === currentUser.id;
+            });
+
+           
+            const usage = { 'Payé': 0, 'Maladie': 0, 'Personnel': 0 };
+            const leaveStats = { 'Payé': [], 'Maladie': [], 'Personnel': [] };
+            
+            currentUserRequests.forEach(r => {
+                if (usage[r.type] != null) {
+                    const days = dayDiff(r.startDate, r.endDate);
+                    usage[r.type] += days;
+                    leaveStats[r.type].push({
+                        startDate: r.startDate,
+                        endDate: r.endDate,
+                        days: days,
+                        reason: r.reason || 'Non spécifié'
+                    });
+                }
+            });
+
+            
             document.querySelectorAll('.balance .leave-type, .balance .leave-type1, .balance .leave-type2, .balance .leave-type3').forEach(block => {
                 const title = block.querySelector('h3')?.textContent?.trim();
                 if (!title) return;
@@ -102,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (title.includes('annuel')) key = 'Payé';
                 else if (title.includes('maladie')) key = 'Maladie';
                 else if (title.includes('personnel')) key = 'Personnel';
-                if (!key) return;
+                if (!key || !ENTITLEMENTS[key]) return;
 
                 const total = ENTITLEMENTS[key];
                 const used = usage[key];
@@ -116,7 +143,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 const usageEl = block.querySelector('.usage');
                 if (usageEl) usageEl.textContent = `${used}/${total} (${percent}% utilisés)`;
             });
-        } catch (err) { console.error('Erreur solde congés:', err); }
+
+            
+            console.log('🏖️ Statistiques des congés pour ' + currentYear + ' (Utilisateur: ' + currentUser.name + '):', {
+                totalLeaves: currentUserRequests.length,
+                usageByType: usage,
+                entitlements: ENTITLEMENTS,
+                remainingDays: {
+                    'Payé': Math.max(0, ENTITLEMENTS['Payé'] - usage['Payé']),
+                    'Maladie': Math.max(0, ENTITLEMENTS['Maladie'] - usage['Maladie']),
+                    'Personnel': Math.max(0, ENTITLEMENTS['Personnel'] - usage['Personnel'])
+                },
+                detailedStats: leaveStats
+            });
+
+        } catch (err) { 
+            console.error('Erreur solde congés:', err);
+           
+            const ENTITLEMENTS = { 'Payé': 20, 'Maladie': 10, 'Personnel': 8 };
+        }
     };
 
     loadLeavesAndUpdateBalance();
@@ -127,14 +172,35 @@ document.addEventListener('DOMContentLoaded', () => {
     /* -------------------- REQUESTS: FETCH & UPDATE COUNTS -------------------- */
     const loadRequestCounts = async () => {
         try {
-            const { data: requests } = await axios.get('http://localhost:4000/requests');
-            let pending = 0, approved = 0, refused = 0;
-            requests.forEach(r => {
-                if (r.status === 'En attente') pending++;
-                else if (r.status === 'Approuvé') approved++;
-                else if (r.status === 'Refusé') refused++;
+            const [requestsResponse, currentUserResponse] = await Promise.all([
+                axios.get('http://localhost:3000/requests'),
+                axios.get('http://localhost:3000/currentUser')
+            ]);
+            
+            const requests = requestsResponse.data || [];
+            const currentUser = currentUserResponse.data;
+            
+           
+            const currentUserRequests = requests.filter(request => request.employeeId === currentUser.id);
+            
+           
+            const currentYear = new Date().getFullYear();
+            const currentYearRequests = currentUserRequests.filter(request => {
+                if (!request.startDate) return false;
+                const requestDate = new Date(request.startDate);
+                return requestDate.getFullYear() === currentYear;
             });
 
+            
+            let pending = 0, approved = 0, refused = 0, totalThisYear = 0;
+            currentYearRequests.forEach(request => {
+                totalThisYear++;
+                if (request.status === 'En attente') pending++;
+                else if (request.status === 'Approuvé') approved++;
+                else if (request.status === 'Refusé') refused++;
+            });
+
+            
             const numBlocks = document.querySelectorAll('.requests .req .num');
             if (numBlocks[0]) numBlocks[0].innerHTML = numberToIcons(pending);
             if (numBlocks[1]) numBlocks[1].innerHTML = numberToIcons(approved);
@@ -142,17 +208,151 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const headingSubtitle = document.querySelector('.requests .on-going h4');
             if (headingSubtitle) headingSubtitle.textContent = `${pending} en attente`;
-        } catch (err) { console.error('Erreur demandes:', err); }
+
+            
+            console.log('📊 Statistiques des demandes de congés (Dashboard) - Utilisateur: ' + currentUser.name + ':', {
+                totalThisYear,
+                statusBreakdown: { approved, pending, refused },
+                userRequests: currentUserRequests,
+                currentYearRequests: currentYearRequests
+            });
+
+        } catch (err) { 
+            console.error('Erreur demandes:', err); 
+        }
     };
 
     loadRequestCounts();
+
+    /* -------------------- COMPREHENSIVE DASHBOARD STATS -------------------- */
+    const loadComprehensiveStats = async () => {
+        try {
+            const [requestsRes, leavesRes, employeesRes] = await Promise.all([
+                axios.get('http://localhost:3000/requests'),
+                axios.get('http://localhost:3000/leaves'),
+                axios.get('http://localhost:3000/employees')
+            ]);
+
+            const requests = requestsRes.data;
+            const leaves = leavesRes.data;
+            const employees = employeesRes.data;
+
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth();
+
+         
+            const ytdRequests = requests.filter(r => new Date(r.requestDate).getFullYear() === currentYear);
+            const ytdLeaves = leaves.filter(l => new Date(l.startDate).getFullYear() === currentYear);
+
+            
+            const thisMonthRequests = requests.filter(r => {
+                const date = new Date(r.requestDate);
+                return date.getFullYear() === currentYear && date.getMonth() === currentMonth;
+            });
+
+           
+            const employeeRequestCount = {};
+            ytdRequests.forEach(r => {
+                employeeRequestCount[r.employeeId] = (employeeRequestCount[r.employeeId] || 0) + 1;
+            });
+
+            const topEmployees = Object.entries(employeeRequestCount)
+                .map(([id, count]) => ({
+                    employee: employees.find(e => e.id == id),
+                    requestCount: count
+                }))
+                .filter(item => item.employee)
+                .sort((a, b) => b.requestCount - a.requestCount)
+                .slice(0, 3);
+
+            
+            const approvedCount = ytdRequests.filter(r => r.status === 'Approuvé').length;
+            const approvalRate = ytdRequests.length > 0 ? Math.round((approvedCount / ytdRequests.length) * 100) : 0;
+
+           
+            const monthlyDistribution = {};
+            ytdRequests.forEach(r => {
+                const month = new Date(r.requestDate).getMonth();
+                monthlyDistribution[month] = (monthlyDistribution[month] || 0) + 1;
+            });
+
+            const peakMonth = Object.entries(monthlyDistribution)
+                .sort(([,a], [,b]) => b - a)[0];
+
+            const monthNames = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
+
+            
+            const dashboardStats = {
+                yearToDate: {
+                    totalRequests: ytdRequests.length,
+                    totalLeaves: ytdLeaves.length,
+                    approvalRate: approvalRate,
+                    thisMonthRequests: thisMonthRequests.length
+                },
+                trends: {
+                    peakMonth: peakMonth ? monthNames[peakMonth[0]] : 'N/A',
+                    peakMonthCount: peakMonth ? peakMonth[1] : 0,
+                    averagePerMonth: Math.round(ytdRequests.length / (currentMonth + 1))
+                },
+                topEmployees: topEmployees,
+                distribution: {
+                    byStatus: {
+                        approved: ytdRequests.filter(r => r.status === 'Approuvé').length,
+                        pending: ytdRequests.filter(r => r.status === 'En attente').length,
+                        refused: ytdRequests.filter(r => r.status === 'Refusé').length
+                    },
+                    byType: {
+                        paid: ytdLeaves.filter(l => l.type === 'Payé').length,
+                        sick: ytdLeaves.filter(l => l.type === 'Maladie').length,
+                        personal: ytdLeaves.filter(l => l.type === 'Personnel').length
+                    }
+                }
+            };
+
+           
+            console.log('📈 RAPPORT COMPLET DU TABLEAU DE BORD ' + currentYear + ':', dashboardStats);
+
+           
+            const statsDisplayEl = document.querySelector('.comprehensive-stats');
+            if (statsDisplayEl) {
+                statsDisplayEl.innerHTML = `
+                    <div class="stats-summary">
+                        <h3>Résumé ${currentYear}</h3>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <strong>${ytdRequests.length}</strong>
+                                <span>Demandes totales</span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>${approvalRate}%</strong>
+                                <span>Taux d'approbation</span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>${thisMonthRequests.length}</strong>
+                                <span>Ce mois-ci</span>
+                            </div>
+                            <div class="summary-item">
+                                <strong>${peakMonth ? monthNames[peakMonth[0]] : 'N/A'}</strong>
+                                <span>Mois le plus actif</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+        } catch (err) {
+            console.error('Erreur statistiques complètes:', err);
+        }
+    };
+
+    loadComprehensiveStats();
 
     /* -------------------- EVENTS: FETCH & RENDER UPCOMING -------------------- */
     const loadEvents = async () => {
         const container = document.querySelector('.upcoming-list');
         if (!container) return;
         try {
-            const { data: events } = await axios.get('http://localhost:4000/events');
+            const { data: events } = await axios.get('http://localhost:3000/events');
             container.querySelectorAll('.events').forEach(el => el.remove());
             if (!events.length) {
                 const empty = document.createElement('div');
@@ -184,124 +384,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadEvents();
 
-    /* -------------------- NOTIFICATION BUTTON & PANEL -------------------- */
-    const notifBtn = document.getElementById('notifBtn');
-    const notifPanel = document.getElementById('notifPanel');
-    const notifList = document.getElementById('notifList');
-    const notifBadge = document.getElementById('notifBadge');
-    const markAllBtn = document.getElementById('markAllRead');
-    let notifData = [];
-
-    const timeAgo = iso => {
-        const d = new Date(iso || Date.now());
-        const diff = Date.now() - d.getTime();
-        const sec = Math.floor(diff/1000); if (sec<60) return 'Maintenant';
-        const min = Math.floor(sec/60); if (min<60) return `Il y a ${min} min`;
-        const hr = Math.floor(min/60); if (hr<24) return `Il y a ${hr} h`;
-        const day = Math.floor(hr/24); return day===1? 'Hier': `Il y a ${day} j`;
-    };
-
-    const renderNotifications = () => {
-        if (!notifList) return;
-        notifList.innerHTML = '';
-        if (!notifData.length) {
-            notifList.innerHTML = '<li><div class="notif-item"><div class="notif-text"><p>Aucune notification.</p></div></div></li>';
-        } else {
-            notifData.forEach(n => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                  <div class="notif-item ${n.read? '':'unread'}" data-id="${n.id}">
-                    <div class="icon"><i class="fa-solid ${n.read? 'fa-envelope-open':'fa-envelope'}"></i></div>
-                    <div class="notif-text">
-                      <h6>${n.message.split('.')[0] || 'Notification'}</h6>
-                      <p>${n.message}</p>
-                      <div class="notif-meta"><span>${timeAgo(n.date)}</span><span>${n.read? 'Lu':'Nouveau'}</span></div>
-                    </div>
-                  </div>`;
-                notifList.appendChild(li);
-            });
-        }
-        const unread = notifData.filter(n=>!n.read).length;
-        if (notifBadge) {
-            if (unread>0){ notifBadge.textContent = unread; notifBadge.hidden = false; } else { notifBadge.hidden = true; }
-        }
-    };
-
-    const loadNotifications = async () => {
-        try {
-            const data = await axios.get('http://localhost:4000/notifications').then(r=>r.data);
-            notifData = data.map(n=> ({...n, date: n.date || new Date().toISOString()})).sort((a,b)=> new Date(b.date)-new Date(a.date));
-            renderNotifications();
-        } catch (e) { console.error('Erreur notifications:', e); }
-    };
-
-    const togglePanel = () => {
-        if (!notifPanel) return;
-        const open = notifPanel.hidden;
-        notifPanel.hidden = !open;
-        notifBtn?.setAttribute('aria-expanded', String(open));
-    };
-
-    notifBtn?.addEventListener('click', e => { e.stopPropagation(); togglePanel(); });
-    document.addEventListener('click', e => {
-        if (!notifPanel || notifPanel.hidden) return;
-        if (!notifPanel.contains(e.target) && e.target !== notifBtn) notifPanel.hidden = true;
-    });
-
-    notifList?.addEventListener('click', e => {
-        const item = e.target.closest('.notif-item');
-        if (!item) return;
-        const id = +item.dataset.id;
-        const n = notifData.find(x=>x.id===id);
-        if (n && !n.read) { n.read = true; renderNotifications(); }
-    });
-
-    markAllBtn?.addEventListener('click', ()=>{
-        notifData.forEach(n=> n.read = true);
-        renderNotifications();
-    });
-
-    loadNotifications();
-    
-    /* -------------------- AVATAR PANEL (CUSTOM) -------------------- */
-    const avatarBtn = document.getElementById('avatarBtn');
-    const avatarPanel = document.getElementById('avatarPanel');
-    const avatarNameEl = document.getElementById('avatarName');
-    const avatarEmailEl = document.getElementById('avatarEmail');
-    const avatarMenu = document.getElementById('avatarMenu');
-    // Using icon avatar, no initials element
-
+    /* -------------------- LOAD CURRENT USER -------------------- */
     const loadCurrentUser = async () => {
         try {
-            const users = await axios.get('http://localhost:4000/employees').then(r=>r.data);
-            const user = users[0];
-            if (user) {
-                avatarNameEl && (avatarNameEl.textContent = user.name);
-                avatarEmailEl && (avatarEmailEl.textContent = user.email);
-                const circle = avatarPanel?.querySelector('.avatar-circle');
-                if (circle) circle.innerHTML = '<i class="fa-solid fa-user"></i>';
-            }
-        } catch(e){ console.error('Erreur chargement utilisateur:', e); }
+            const { data: currentUser } = await axios.get('http://localhost:3000/currentUser');
+            
+           
+            const userNameElements = document.querySelectorAll('.user-name, .current-user-name');
+            userNameElements.forEach(el => {
+                if (el) el.textContent = currentUser.name;
+            });
+
+            const userEmailElements = document.querySelectorAll('.user-email');
+            userEmailElements.forEach(el => {
+                if (el) el.textContent = currentUser.email;
+            });
+
+            const userPositionElements = document.querySelectorAll('.user-position');
+            userPositionElements.forEach(el => {
+                if (el) el.textContent = currentUser.position;
+            });
+
+            console.log('👤 Utilisateur connecté:', currentUser);
+
+        } catch (err) {
+            console.error('Erreur chargement utilisateur:', err);
+        }
     };
-
-    const toggleAvatarPanel = () => {
-        if (!avatarPanel) return;
-        const open = avatarPanel.hidden;
-        avatarPanel.hidden = !open;
-        avatarBtn?.setAttribute('aria-expanded', String(open));
-    };
-
-    avatarBtn?.addEventListener('click', e => { e.stopPropagation(); toggleAvatarPanel(); });
-    document.addEventListener('click', e => {
-        if (!avatarPanel || avatarPanel.hidden) return;
-        if (!avatarPanel.contains(e.target) && e.target !== avatarBtn) avatarPanel.hidden = true;
-    });
-
-    avatarMenu?.addEventListener('click', e => {
-        const li = e.target.closest('li');
-        if (!li) return;
-        if (avatarPanel) avatarPanel.hidden = true; 
-    });
-
+    
     loadCurrentUser();
 });

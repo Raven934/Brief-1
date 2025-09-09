@@ -1,159 +1,69 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>FlexiDays - Administration</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+      rel="stylesheet"/>
     <link
       href="https://fonts.googleapis.com/css2?family=Itim&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet"/>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <link rel="stylesheet" href="admin.css" />
-    <link rel="stylesheet" href="../shared.css" />
+    <link rel="stylesheet" href="../shared.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <header>
-      <div class="logo">FlexiDays.</div>
-      <nav>
-        <a href="../dashboard/Dashboard.html">Tableau de bord</a>
-        <a href="../myleaves/leaves.html">Mes congés</a>
-        <a href="../requests/demand.html">Demande de congé</a>
-        <a href="admin.html" class="active">Administration</a>
-      </nav>
-      <div class="icons">
-        <div class="dropdown">
-          <button
-            class="avatar dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="fa-solid fa-user" style="color: #f8f9fa"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <h6 class="dropdown-header">
-                <i class="fa-solid fa-user me-2"></i>Jean Dupont
-              </h6>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item" href="#"
-                ><i class="fa-solid fa-id-card me-2"></i>Mon profil</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#"
-                ><i class="fa-solid fa-gear me-2"></i>Paramètres</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#"
-                ><i class="fa-solid fa-clock me-2"></i>Historique</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#"
-                ><i class="fa-solid fa-question-circle me-2"></i>Aide</a
-              >
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item text-danger" href="#"
-                ><i class="fa-solid fa-sign-out-alt me-2"></i>Déconnexion</a
-              >
-            </li>
-          </ul>
-        </div>
+   <header>
+        <div class="logo">FlexiDays.</div>
+        <nav>
+            <a href="../dashboard/Dashboard.html">Tableau de bord</a>
+            <a href="../myleaves/leaves.html">Mes congés</a>
+            <a href="../requests/demand.html">Demande de congé</a>
+            <a href="../admin/admin.html" class="active">Administration</a>
+        </nav>
+        <div class="icons">
+            <div class="avatar-wrapper">
+                <button id="avatarBtn" class="avatar-btn" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+                <div id="avatarPanel" class="avatar-panel" hidden>
+                    <div class="avatar-header">
+                        <div class="avatar-circle"><i class="fa-solid fa-user"></i></div>
+                        <div class="avatar-info">
+                            <h6 id="avatarName">Jean Dupont</h6>
+                            <p id="avatarEmail">jean.dupont@exemple.com</p>
+                        </div>
+                    </div>
+                    <ul class="avatar-menu" id="avatarMenu">
+                        <li data-action="profile"><i class="fa-solid fa-id-card"></i> Mon profil</li>
+                        <li data-action="settings"><i class="fa-solid fa-gear"></i> Paramètres</li>
+                        <li data-action="history"><i class="fa-solid fa-clock"></i> Historique</li>
+                        <li data-action="help"><i class="fa-solid fa-question-circle"></i> Aide</li>
+                        <li class="danger" data-action="logout"><i class="fa-solid fa-sign-out-alt"></i> Déconnexion</li>
+                    </ul>
+                </div>
+            </div>
 
-        <div class="dropdown">
-          <button
-            class="notifs dropdown-toggle position-relative"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <i class="fa-solid fa-bell" style="color: #f8f9fa"></i>
-            <span
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-            >
-              3
-              <span class="visually-hidden">notifications non lues</span>
-            </span>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li><h6 class="dropdown-header">Notifications récentes</h6></li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <i class="fa-solid fa-check-circle text-success me-2"></i>
-                  </div>
-                  <div>
-                    <h6 class="mb-1">Congé approuvé</h6>
-                    <p class="mb-1 small text-muted">
-                      Votre demande du 15-20 oct a été approuvée
-                    </p>
-                    <small class="text-muted">Il y a 2 heures</small>
-                  </div>
+            <div class="notif-wrapper">
+                <button id="notifBtn" class="notif-btn" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-bell"></i>
+                    <span id="notifBadge" class="notif-badge" hidden>0</span>
+                </button>
+                <div id="notifPanel" class="notif-panel" hidden>
+                    <div class="notif-panel-header">
+                        <span>Notifications</span>
+                        <button id="markAllRead" class="mark-all">Tout marquer lu</button>
+                    </div>
+                    <ul id="notifList" class="notif-list"></ul>
+                    <div class="notif-footer"><button id="viewAllNotifs" class="view-all">Voir tout</button></div>
                 </div>
-              </a>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <i
-                      class="fa-solid fa-exclamation-triangle text-warning me-2"
-                    ></i>
-                  </div>
-                  <div>
-                    <h6 class="mb-1">Rappel</h6>
-                    <p class="mb-1 small text-muted">
-                      N'oubliez pas de soumettre votre rapport
-                    </p>
-                    <small class="text-muted">Il y a 4 heures</small>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item" href="#">
-                <div class="d-flex">
-                  <div class="flex-shrink-0">
-                    <i class="fa-solid fa-info-circle text-info me-2"></i>
-                  </div>
-                  <div>
-                    <h6 class="mb-1">Mise à jour système</h6>
-                    <p class="mb-1 small text-muted">
-                      Nouvelle version disponible
-                    </p>
-                    <small class="text-muted">Hier</small>
-                  </div>
-                </div>
-              </a>
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="dropdown-item text-center" href="#"
-                ><i class="fa-solid fa-eye me-2"></i>Voir toutes les
-                notifications</a
-              >
-            </li>
-          </ul>
+            </div>
         </div>
-      </div>
     </header>
 
     <main class="admin-main">
@@ -539,6 +449,7 @@
         </p>
       </div>
     </footer>
+    <script src="../shared.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
