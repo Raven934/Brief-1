@@ -287,8 +287,8 @@ textarea.form-input {
 }
 
 .request-status.pending {
-    background: linear-gradient(135deg, #fef3c7, #fde68a);
-    color: #92400e;
+    background: linear-gradient(135deg, #ff9797, #f4b5b5);
+    color: #9a2020;
 }
 
 .request-status.approved {
@@ -566,7 +566,4 @@ textarea.form-input {
     color: #c62828;
 }
 
-.request-status.pending {
-    background-color: #fff3e0;
-    color: #ef6c00;
-}
+

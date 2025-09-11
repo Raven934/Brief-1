@@ -34,8 +34,16 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
         
+        // Normalize type to canonical values used across the app
+        const typeMap = {
+            annual: 'Payé',
+            sick: 'Maladie',
+            personal: 'Personnel'
+        };
+        const normalizedType = typeMap[leaveTypeSelect.value] || leaveTypeSelect.value;
+
         const formData = {
-            type: leaveTypeSelect.value,
+            type: normalizedType,
             startDate: startDateInput.value,
             endDate: endDateInput.value,
             reason: reasonTextarea.value.trim(),
@@ -112,9 +120,14 @@ async function loadRecentRequests() {
         
         userRequests.forEach(request => {
             const typeDisplayNames = {
+                // Canonical types
                 'Payé': 'Congés payés',
                 'Maladie': 'Congé maladie',
-                'Personnel': 'Congé personnel'
+                'Personnel': 'Congé personnel',
+                // Fallbacks for any legacy values
+                'annual': 'Congés payés',
+                'sick': 'Congé maladie',
+                'personal': 'Congé personnel'
             };
             
             const statusDisplayNames = {

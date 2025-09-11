@@ -1,9 +1,10 @@
 {
-  "currentUser": {
+  "admin": {
     "id": 1,
-    "name": "Jean Dupont",
-    "email": "jean.dupont@exemple.com",
-    "position": "Développeur",
+    "name": "Raven Reyes",
+    "email": "raven.reyes@gmail.com",
+    "password": "Raven934",
+    "position": "admin",
     "avatar": "admin/Open Peeps - Avatar (1).png"
   },
   "employees": [
@@ -11,6 +12,7 @@
       "id": "1",
       "name": "Jean Dupont",
       "email": "jean.dupont@exemple.com",
+      "password": "Jean934",
       "position": "Développeur",
       "avatar": "admin/Open Peeps - Avatar (1).png"
     },
@@ -62,7 +64,7 @@
       "type": "Personnel",
       "startDate": "2025-10-15",
       "endDate": "2025-10-16",
-      "status": "En attente",
+      "status": "Refusé",
       "employeeId": 1,
       "requestDate": "2025-09-08",
       "reason": "Rendez-vous médical important"
@@ -82,7 +84,7 @@
       "type": "Personnel",
       "startDate": "2025-11-25",
       "endDate": "2025-11-25",
-      "status": "En attente",
+      "status": "Approuvé",
       "employeeId": 1,
       "requestDate": "2025-09-05",
       "reason": "Déménagement personnel"
@@ -91,8 +93,8 @@
       "id": "6",
       "type": "Maladie",
       "startDate": "2025-06-20",
-      "endDate": "2025-06-21",
-      "status": "En attente",
+      "endDate": "2025-06-24",
+      "status": "Refusé",
       "employeeId": 1,
       "requestDate": "2025-06-19",
       "reason": "Mal de tête - certificat médical manquant"
@@ -102,7 +104,7 @@
       "type": "Payé",
       "startDate": "2025-05-01",
       "endDate": "2025-05-05",
-      "status": "En attente",
+      "status": "Approuvé",
       "employeeId": 1,
       "requestDate": "2025-04-10",
       "reason": "Pont du 1er mai - vacances familiales"
@@ -112,7 +114,7 @@
       "type": "Payé",
       "startDate": "2025-09-30",
       "endDate": "2025-10-01",
-      "status": "En attente",
+      "status": "Refusé",
       "employeeId": 1,
       "requestDate": "2025-09-09",
       "reason": "Affaires personnelles urgentes"
@@ -142,7 +144,7 @@
       "type": "Personnel",
       "startDate": "2025-01-22",
       "endDate": "2025-01-24",
-      "status": "En attente",
+      "status": "Refusé",
       "employeeId": 2,
       "requestDate": "2025-01-08",
       "reason": "Congé parental"
@@ -158,7 +160,7 @@
       "reason": "Affaires personnelles"
     },
     {
-      "id": "5",
+      "id": "13",
       "type": "Personnel",
       "startDate": "2025-01-22",
       "endDate": "2025-01-24",
@@ -168,7 +170,7 @@
       "reason": "Congé parental"
     },
     {
-      "id": "6",
+      "id": "14",
       "type": "Personnel",
       "startDate": "2025-05-20",
       "endDate": "2025-05-21",
@@ -178,7 +180,7 @@
       "reason": "Congé personnel"
     },
     {
-      "id": "7",
+      "id": "15",
       "type": "Payé",
       "startDate": "2025-12-18",
       "endDate": "2025-12-22",
@@ -188,7 +190,7 @@
       "reason": "Congés de fin d'année"
     },
     {
-      "id": "8",
+      "id": "16",
       "type": "Payé",
       "startDate": "2025-07-15",
       "endDate": "2025-07-25",
@@ -198,7 +200,7 @@
       "reason": "Voyage familial"
     },
     {
-      "id": "9",
+      "id": "17",
       "type": "Payé",
       "startDate": "2025-02-10",
       "endDate": "2025-02-17",
@@ -208,7 +210,7 @@
       "reason": "Formation externe"
     },
     {
-      "id": "10",
+      "id": "18",
       "type": "Maladie",
       "startDate": "2025-06-10",
       "endDate": "2025-06-12",
@@ -218,7 +220,7 @@
       "reason": "Vacances de printemps"
     },
     {
-      "id": "11",
+      "id": "19",
       "type": "Payé",
       "startDate": "2025-04-08",
       "endDate": "2025-04-15",
@@ -317,5 +319,11 @@
       "endDate": "2025-11-12",
       "type": "Payé"
     }
-  ]
+  ],
+  "currentUser": {
+    "id": 1,
+    "name": "Raven Reyes",
+    "email": "raven.reyes@gmail.com",
+    "role": "admin"
+  }
 }

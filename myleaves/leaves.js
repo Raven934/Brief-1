@@ -4,23 +4,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const loadLeaveStatistics = async () => {
         try {
             
-            const [currentUserRes, requestsRes] = await Promise.all([
-                axios.get('http://localhost:3000/currentUser'),
-                axios.get('http://localhost:3000/requests')
+            const [requestsRes] = await Promise.all([
+                axios.get('http://localhost:3000/requests?employeeId=1')
             ]);
 
-            const currentUser = currentUserRes.data;
             const allRequests = requestsRes.data;
             const currentYear = new Date().getFullYear();
 
-            console.log('loadLeaveStatistics - currentUser:', currentUser);
-            console.log('loadLeaveStatistics - allRequests:', allRequests);
+            console.log('loadLeaveStatistics - employeeId 1 - allRequests:', allRequests);
 
             
             const userRequestsThisYear = allRequests.filter(request => {
                 const requestYear = new Date(request.startDate).getFullYear();
-                console.log('Checking request:', request.id, 'employeeId:', request.employeeId, 'vs currentUser.id:', currentUser.id);
-                return request.employeeId == currentUser.id && requestYear === currentYear; // Use == for loose comparison
+                console.log('Checking request:', request.id, 'employeeId:', request.employeeId, 'vs employeeId 1');
+                return request.employeeId == 1 && requestYear === currentYear;
             });
 
             console.log('loadLeaveStatistics - Found userRequestsThisYear:', userRequestsThisYear.length, userRequestsThisYear);
@@ -46,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             animateCounters();
 
-            console.log('📊 Statistiques des congés de ' + currentUser.name + ' pour ' + currentYear + ':', {
+            console.log('📊 Statistiques des congés de Employé #1 pour ' + currentYear + ':', {
                 totalDemandes: stats.total,
                 enAttente: stats.pending,
                 approuvées: stats.approved,
@@ -54,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 détails: userRequestsThisYear
             });
 
-            return { stats, userRequestsThisYear, currentUser };
+            return { stats, userRequestsThisYear };
 
         } catch (error) {
             console.error('Erreur lors du chargement des statistiques:', error);
@@ -96,21 +93,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* -------------------- LOAD AND DISPLAY RECENT LEAVES TABLE -------------------- */
     const loadRecentLeaves = async () => {
         try {
-            const [currentUserRes, requestsRes, employeesRes] = await Promise.all([
-                axios.get('http://localhost:3000/currentUser'),
-                axios.get('http://localhost:3000/requests'),
-                axios.get('http://localhost:3000/employees')
+            const [requestsRes] = await Promise.all([
+                axios.get('http://localhost:3000/requests?employeeId=1')
             ]);
 
-            const currentUser = currentUserRes.data;
             const allRequests = requestsRes.data;
-            const employees = employeesRes.data;
 
             const userRequests = allRequests
-                .filter(request => {
-                    console.log('Checking request:', request.id, 'employeeId:', request.employeeId, 'currentUser.id:', currentUser.id);
-                    return request.employeeId == currentUser.id; // Use == for loose comparison
-                })
+                .filter(request => request.employeeId == 1)
                 .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate))
                 .slice(0, 10); 
 
@@ -524,19 +514,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     /* -------------------- UPDATE STATISTICS ONLY -------------------- */
     const updateStatisticsOnly = async () => {
         try {
-            const [currentUserRes, requestsRes] = await Promise.all([
-                axios.get('http://localhost:3000/currentUser'),
-                axios.get('http://localhost:3000/requests')
+            const [requestsRes] = await Promise.all([
+                axios.get('http://localhost:3000/requests?employeeId=1')
             ]);
 
-            const currentUser = currentUserRes.data;
             const allRequests = requestsRes.data;
             const currentYear = new Date().getFullYear();
 
             
             const userRequestsThisYear = allRequests.filter(request => {
                 const requestYear = new Date(request.startDate).getFullYear();
-                return request.employeeId === currentUser.id && requestYear === currentYear;
+                return request.employeeId == 1 && requestYear === currentYear;
             });
 
             

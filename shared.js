@@ -116,3 +116,55 @@
     });
 
     loadCurrentUser();
+
+    /* -------------------- DYNAMIC NAVBAR & LOGOUT -------------------- */
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/currentUser');
+            const currentUser = response.data;
+
+            if (!currentUser || Object.keys(currentUser).length === 0) {
+                // If no user is logged in, redirect to login page
+                if (!window.location.pathname.includes('login.html')) {
+                    window.location.href = '/login.html';
+                }
+                return;
+            }
+
+            const nav = document.querySelector('nav');
+            if (nav) {
+                if (currentUser.role === 'admin') {
+                    nav.innerHTML = `
+                        <a href="/admin/admin.html" class="${window.location.pathname.includes('admin.html') ? 'active' : ''}">Administration</a>
+                    `;
+                } else {
+                    nav.innerHTML = `
+                        <a href="/dashboard/dashboard.html" class="${window.location.pathname.includes('dashboard.html') ? 'active' : ''}">Tableau de bord</a>
+                        <a href="/myleaves/leaves.html" class="${window.location.pathname.includes('leaves.html') ? 'active' : ''}">Mes Congés</a>
+                        <a href="/requests/demand.html" class="${window.location.pathname.includes('demand.html') ? 'active' : ''}">Nouvelle Demande</a>
+                    `;
+                }
+            }
+
+            const logoutButton = document.getElementById('logout');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', async () => {
+                    try {
+                        // Reset currentUser on the server to a guest state
+                        await axios.put('http://localhost:3000/currentUser', { id: null, role: 'guest' });
+                        // Redirect to login page
+                        window.location.href = '/login.html';
+                    } catch (error) {
+                        console.error('Erreur lors de la déconnexion:', error);
+                    }
+                });
+            }
+
+        } catch (error) {
+            console.error('Erreur lors de la vérification de l\'utilisateur:', error);
+            // If there's an error fetching the user (e.g., server down), redirect to login
+            if (!window.location.pathname.includes('login.html')) {
+                window.location.href = '/login.html';
+            }
+        }
+    });

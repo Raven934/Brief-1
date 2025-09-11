@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const startDate = new Date(r.startDate);
                 return startDate.getFullYear() === currentYear && 
                        r.status === 'Approuvé' && 
-                       r.employeeId === currentUser.id;
+                       r.employeeId == 1;
             });
 
            
@@ -181,7 +181,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentUser = currentUserResponse.data;
             
            
-            const currentUserRequests = requests.filter(request => request.employeeId === currentUser.id);
+            // Always focus on employeeId 1
+            const currentUserRequests = requests.filter(request => request.employeeId == 1);
             
            
             const currentYear = new Date().getFullYear();
@@ -210,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (headingSubtitle) headingSubtitle.textContent = `${pending} en attente`;
 
             
-            console.log('📊 Statistiques des demandes de congés (Dashboard) - Utilisateur: ' + currentUser.name + ':', {
+            console.log('📊 Statistiques des demandes de congés (Dashboard) - Employé #1:', {
                 totalThisYear,
                 statusBreakdown: { approved, pending, refused },
                 userRequests: currentUserRequests,
