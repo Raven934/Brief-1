@@ -70,11 +70,16 @@ main {
 }
 .page-title {
     font-size: 2.5rem;
-    color: #006A71;
-    margin-bottom: 2rem;
-    text-decoration-color: #006A71;
+    color: #124c53;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    animation: slideInFromBottom 1s ease-out 0.2s both;
 }
-
+.center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .stats-cards {
     display: grid;
@@ -90,6 +95,7 @@ main {
     display: flex;
     align-items: center;
     gap: 1rem;
+    animation: slideInFromBottom 1s ease-out 0.2s both;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-left: 3px solid #006A71;
 }

@@ -3,32 +3,37 @@
     "id": 1,
     "name": "Jean Dupont",
     "email": "jean.dupont@exemple.com",
-    "position": "Développeur"
+    "position": "Développeur",
+    "avatar": "admin/Open Peeps - Avatar (1).png"
   },
   "employees": [
     {
       "id": "1",
       "name": "Jean Dupont",
       "email": "jean.dupont@exemple.com",
-      "position": "Développeur"
+      "position": "Développeur",
+      "avatar": "admin/Open Peeps - Avatar (1).png"
     },
     {
       "id": "2",
       "name": "Marie Martin",
       "email": "marie.martin@exemple.com",
-      "position": "Chef de projet"
+      "position": "Chef de projet",
+      "avatar": "admin/Open Peeps - Avatar (3).png"
     },
     {
       "id": "3",
       "name": "Pierre Durand",
       "email": "pierre.durand@exemple.com",
-      "position": "Designer"
+      "position": "Designer",
+      "avatar": "admin/Open Peeps - Avatar (2).png"
     },
     {
       "id": "4",
       "name": "Sophie Bernard",
       "email": "sophie.bernard@exemple.com",
-      "position": "Analyste"
+      "position": "Analyste",
+      "avatar": "admin/Open Peeps - Avatar (4).png"
     }
   ],
   "requests": [
@@ -37,7 +42,7 @@
       "type": "Payé",
       "startDate": "2025-12-23",
       "endDate": "2025-12-31",
-      "status": "Approuvé",
+      "status": "Refusé",
       "employeeId": 1,
       "requestDate": "2025-09-01",
       "reason": "Congés de fin d'année"
@@ -67,7 +72,7 @@
       "type": "Payé",
       "startDate": "2025-07-01",
       "endDate": "2025-07-14",
-      "status": "Refusé",
+      "status": "Approuvé",
       "employeeId": 1,
       "requestDate": "2025-06-15",
       "reason": "Vacances d'été - période de forte activité"
@@ -77,7 +82,7 @@
       "type": "Personnel",
       "startDate": "2025-11-25",
       "endDate": "2025-11-25",
-      "status": "Approuvé",
+      "status": "En attente",
       "employeeId": 1,
       "requestDate": "2025-09-05",
       "reason": "Déménagement personnel"
@@ -87,7 +92,7 @@
       "type": "Maladie",
       "startDate": "2025-06-20",
       "endDate": "2025-06-21",
-      "status": "Refusé",
+      "status": "En attente",
       "employeeId": 1,
       "requestDate": "2025-06-19",
       "reason": "Mal de tête - certificat médical manquant"
@@ -97,14 +102,14 @@
       "type": "Payé",
       "startDate": "2025-05-01",
       "endDate": "2025-05-05",
-      "status": "Approuvé",
+      "status": "En attente",
       "employeeId": 1,
       "requestDate": "2025-04-10",
       "reason": "Pont du 1er mai - vacances familiales"
     },
     {
       "id": "8",
-      "type": "Personnel",
+      "type": "Payé",
       "startDate": "2025-09-30",
       "endDate": "2025-10-01",
       "status": "En attente",
@@ -137,7 +142,7 @@
       "type": "Personnel",
       "startDate": "2025-01-22",
       "endDate": "2025-01-24",
-      "status": "Approuvé",
+      "status": "En attente",
       "employeeId": 2,
       "requestDate": "2025-01-08",
       "reason": "Congé parental"
@@ -157,7 +162,7 @@
       "type": "Personnel",
       "startDate": "2025-01-22",
       "endDate": "2025-01-24",
-      "status": "Approuvé",
+      "status": "En attente",
       "employeeId": 2,
       "requestDate": "2025-01-08",
       "reason": "Congé parental"
@@ -167,7 +172,7 @@
       "type": "Personnel",
       "startDate": "2025-05-20",
       "endDate": "2025-05-21",
-      "status": "Refusé",
+      "status": "En attente",
       "employeeId": 2,
       "requestDate": "2025-04-20",
       "reason": "Congé personnel"
@@ -177,7 +182,7 @@
       "type": "Payé",
       "startDate": "2025-12-18",
       "endDate": "2025-12-22",
-      "status": "Approuvé",
+      "status": "En attente",
       "employeeId": 3,
       "requestDate": "2025-09-01",
       "reason": "Congés de fin d'année"
@@ -187,7 +192,7 @@
       "type": "Payé",
       "startDate": "2025-07-15",
       "endDate": "2025-07-25",
-      "status": "Approuvé",
+      "status": "En attente",
       "employeeId": 3,
       "requestDate": "2025-06-10",
       "reason": "Voyage familial"
@@ -197,7 +202,7 @@
       "type": "Payé",
       "startDate": "2025-02-10",
       "endDate": "2025-02-17",
-      "status": "Approuvé",
+      "status": "En attente",
       "employeeId": 3,
       "requestDate": "2025-01-15",
       "reason": "Formation externe"
@@ -207,7 +212,7 @@
       "type": "Maladie",
       "startDate": "2025-06-10",
       "endDate": "2025-06-12",
-      "status": "Approuvé",
+      "status": "En attente",
       "employeeId": 4,
       "requestDate": "2025-05-15",
       "reason": "Vacances de printemps"
@@ -217,7 +222,7 @@
       "type": "Payé",
       "startDate": "2025-04-08",
       "endDate": "2025-04-15",
-      "status": "Approuvé",
+      "status": "En attente",
       "employeeId": 4,
       "requestDate": "2025-03-12",
       "reason": "Vacances d'été"
@@ -239,7 +244,7 @@
     {
       "id": "3",
       "userId": 3,
-      "message": "Votre demande de congé a été refusée.",
+      "message": "Votre demande de congé a été Refusésée.",
       "read": false
     },
     {

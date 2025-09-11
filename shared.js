@@ -14,7 +14,6 @@
         const hr = Math.floor(min/60); if (hr<24) return `Il y a ${hr} h`;
         const day = Math.floor(hr/24); return day===1? 'Hier': `Il y a ${day} j`;
     };
-
     const renderNotifications = () => {
         if (!notifList) return;
         notifList.innerHTML = '';

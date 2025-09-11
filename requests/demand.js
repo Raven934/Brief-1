@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const { data: requests } = await axios.get('http://localhost:3000/requests');
             const maxId = Math.max(...requests.map(r => parseInt(r.id))) || 0;
             formData.id = (maxId + 1).toString();
+
             
             // Submit the request
             const response = await axios.post('http://localhost:3000/requests', formData);
