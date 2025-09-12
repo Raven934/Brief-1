@@ -283,18 +283,22 @@ textarea.form-input {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.8px;
+       background-color: #f8d7da;
+  color: #721c24;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .request-status.pending {
-    background: linear-gradient(135deg, #ff9797, #f4b5b5);
-    color: #9a2020;
+    background-color: #fff3cd;
+  color: #856404;
 }
 
 .request-status.approved {
     background: linear-gradient(135deg, #d1fae5, #a7f3d0);
     color: #065f46;
 }
+
+
 
 
 .form-actions {

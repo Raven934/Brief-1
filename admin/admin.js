@@ -1,19 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
     let allRequests = [];
     let allEmployees = [];
-    let filterState = 'all'; // Can be 'all', 'pending', or 'processed'
-    
-    // Initialize admin page
+    let filterState = 'all'; 
     init();
     
     async function init() {
         try {
-            // Load data
+            
             await loadEmployees();
             await loadRequests();
             await loadStatistics();
             
-            // Setup event listeners
+           
             setupEventListeners();
             
         } catch (error) {

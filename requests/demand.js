@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Check if dates are in the past
         if (new Date(formData.startDate) < new Date()) {
             showNotification('La date de début ne peut pas être dans le passé', 'error');
             return;
@@ -139,7 +138,8 @@ async function loadRecentRequests() {
             const startDate = new Date(request.startDate).toLocaleDateString('fr-FR');
             const endDate = new Date(request.endDate).toLocaleDateString('fr-FR');
             const statusClass = request.status === 'Approuvé' ? 'approved' : 
-                              request.status === 'Rejeté' ? 'rejected' : 'pending';
+                              request.status === 'Rejeté' ? 'rejected' :
+                              request.status === 'En attente' ? 'pending' : '';
             
             const requestHTML = `
                 <div class="request-item">

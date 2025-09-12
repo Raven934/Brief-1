@@ -228,6 +228,16 @@
       "employeeId": 4,
       "requestDate": "2025-03-12",
       "reason": "Vacances d'été"
+    },
+    {
+      "id": "20",
+      "type": "Personnel",
+      "startDate": "2025-09-20",
+      "endDate": "2025-09-23",
+      "reason": "popefpawojpwa",
+      "employeeId": 1,
+      "status": "En attente",
+      "requestDate": "2025-09-12"
     }
   ],
   "notifications": [
@@ -321,9 +331,9 @@
     }
   ],
   "currentUser": {
-    "id": 1,
-    "name": "Raven Reyes",
-    "email": "raven.reyes@gmail.com",
-    "role": "admin"
+    "id": "1",
+    "name": "Jean Dupont",
+    "email": "jean.dupont@exemple.com",
+    "role": "employee"
   }
 }
