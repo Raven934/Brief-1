@@ -4,8 +4,13 @@
     "name": "Raven Reyes",
     "email": "raven.reyes@gmail.com",
     "password": "Raven934",
-    "position": "admin",
-    "avatar": "admin/Open Peeps - Avatar (1).png"
+    "position": "admin"
+  },
+  "currentUser": {
+    "id": "4",
+    "name": "Sophie Bernard",
+    "email": "sophie.bernard@exemple.com",
+    "position": "Analyste"
   },
   "employees": [
     {
@@ -20,6 +25,7 @@
       "id": "2",
       "name": "Marie Martin",
       "email": "marie.martin@exemple.com",
+      "password": "Marie934",
       "position": "Chef de projet",
       "avatar": "admin/Open Peeps - Avatar (3).png"
     },
@@ -27,15 +33,17 @@
       "id": "3",
       "name": "Pierre Durand",
       "email": "pierre.durand@exemple.com",
+      "password": "Pierre934",
       "position": "Designer",
-      "avatar": "admin/Open Peeps - Avatar (2).png"
+      "avatar": "admin/Open Peeps - Avatar (4).png"
     },
     {
       "id": "4",
       "name": "Sophie Bernard",
       "email": "sophie.bernard@exemple.com",
+      "password": "Sophie934",
       "position": "Analyste",
-      "avatar": "admin/Open Peeps - Avatar (4).png"
+      "avatar": "admin/Open Peeps - Avatar.png"
     }
   ],
   "requests": [
@@ -124,17 +132,17 @@
       "type": "Maladie",
       "startDate": "2025-11-05",
       "endDate": "2025-11-07",
-      "status": "En attente",
+      "status": "Approuvé",
       "employeeId": 2,
       "requestDate": "2025-09-05",
       "reason": "Je ne me sens pas bien"
     },
     {
       "id": "10",
-      "type": "Personnel",
+      "type": "Maladie",
       "startDate": "2025-11-15",
       "endDate": "2025-11-16",
-      "status": "En attente",
+      "status": "Refusé",
       "employeeId": 2,
       "requestDate": "2025-09-09",
       "reason": "Affaires personnelles"
@@ -154,7 +162,7 @@
       "type": "Personnel",
       "startDate": "2025-11-15",
       "endDate": "2025-11-16",
-      "status": "En attente",
+      "status": "Approuvé",
       "employeeId": 2,
       "requestDate": "2025-09-09",
       "reason": "Affaires personnelles"
@@ -184,7 +192,7 @@
       "type": "Payé",
       "startDate": "2025-12-18",
       "endDate": "2025-12-22",
-      "status": "En attente",
+      "status": "Approuvé",
       "employeeId": 3,
       "requestDate": "2025-09-01",
       "reason": "Congés de fin d'année"
@@ -194,7 +202,7 @@
       "type": "Payé",
       "startDate": "2025-07-15",
       "endDate": "2025-07-25",
-      "status": "En attente",
+      "status": "Approuvé",
       "employeeId": 3,
       "requestDate": "2025-06-10",
       "reason": "Voyage familial"
@@ -204,17 +212,17 @@
       "type": "Payé",
       "startDate": "2025-02-10",
       "endDate": "2025-02-17",
-      "status": "En attente",
+      "status": "Approuvé",
       "employeeId": 3,
       "requestDate": "2025-01-15",
       "reason": "Formation externe"
     },
     {
       "id": "18",
-      "type": "Maladie",
+      "type": "Payé",
       "startDate": "2025-06-10",
       "endDate": "2025-06-12",
-      "status": "En attente",
+      "status": "Refusé",
       "employeeId": 4,
       "requestDate": "2025-05-15",
       "reason": "Vacances de printemps"
@@ -224,19 +232,19 @@
       "type": "Payé",
       "startDate": "2025-04-08",
       "endDate": "2025-04-15",
-      "status": "En attente",
+      "status": "Approuvé",
       "employeeId": 4,
       "requestDate": "2025-03-12",
       "reason": "Vacances d'été"
     },
     {
       "id": "20",
-      "type": "Personnel",
+      "type": "Maladie",
       "startDate": "2025-09-20",
       "endDate": "2025-09-23",
-      "reason": "popefpawojpwa",
+      "reason": "hwoafhpwa;",
       "employeeId": 1,
-      "status": "En attente",
+      "status": "Refusé",
       "requestDate": "2025-09-12"
     }
   ],
@@ -329,11 +337,5 @@
       "endDate": "2025-11-12",
       "type": "Payé"
     }
-  ],
-  "currentUser": {
-    "id": "1",
-    "name": "Jean Dupont",
-    "email": "jean.dupont@exemple.com",
-    "role": "employee"
-  }
+  ]
 }

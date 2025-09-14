@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Add a class to the body for login-specific styling
     document.body.classList.add('login-page');
 
     const loginForm = document.getElementById('login-form');
@@ -22,22 +21,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = allUsers.find(u => u && u.email === email && u.password === password);
 
             if (user) {
-                // 2. Set the logged-in user in currentUser using PUT
                 await axios.put('http://localhost:3000/currentUser', {
                     id: user.id,
                     name: user.name,
                     email: user.email,
-                    role: user.position === 'admin' ? 'admin' : 'employee' 
+                    position: user.position
                 });
 
-                // 3. Redirect based on role
                 if (user.position === 'admin') {
                     window.location.href = '/admin/admin.html';
                 } else {
                     window.location.href = '/dashboard/dashboard.html';
                 }
             } else {
-                // Handle invalid credentials
                 alert('Email ou mot de passe incorrect.');
             }
         } catch (error) {

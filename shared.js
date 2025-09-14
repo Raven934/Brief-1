@@ -91,8 +91,24 @@
                 avatarNameEl && (avatarNameEl.textContent = user.name);
                 avatarEmailEl && (avatarEmailEl.textContent = user.email);
                 const circle = avatarPanel?.querySelector('.avatar-circle');
-                if (circle) circle.innerHTML = '<i class="fa-solid fa-user"></i>';
+                if (circle) {
+                  if (user.avatar) {
+                    circle.innerHTML = '<i class="fa-solid fa-user"></i>';
+                  }
+                }
             }
+            const userNameElements = document.querySelectorAll('.user-name, .current-user-name');
+            userNameElements.forEach(el => {
+                if (el) el.textContent = user.name;
+            });
+            const userEmailElements = document.querySelectorAll('.user-email');
+            userEmailElements.forEach(el => {
+                if (el) el.textContent = user.email;
+            });
+            const userPositionElements = document.querySelectorAll('.user-position');
+            userPositionElements.forEach(el => {
+                if (el) el.textContent = user.position;
+            });
         } catch(e){ console.error('Erreur chargement utilisateur:', e); }
     };
 
@@ -123,17 +139,17 @@
             const response = await axios.get('http://localhost:3000/currentUser');
             const currentUser = response.data;
 
-            if (!currentUser || Object.keys(currentUser).length === 0) {
+            if (!currentUser || Object.keys(currentUser).length === 0 || !currentUser.position) {
                 // If no user is logged in, redirect to login page
                 if (!window.location.pathname.includes('login.html')) {
-                    window.location.href = '/login.html';
+                    window.location.href = '/login/login.html';
                 }
                 return;
             }
 
             const nav = document.querySelector('nav');
             if (nav) {
-                if (currentUser.role === 'admin') {
+                if (currentUser.position === 'admin') {
                     nav.innerHTML = `
                         <a href="/admin/admin.html" class="${window.location.pathname.includes('admin.html') ? 'active' : ''}">Administration</a>
                     `;
@@ -150,10 +166,8 @@
             if (logoutButton) {
                 logoutButton.addEventListener('click', async () => {
                     try {
-                        // Reset currentUser on the server to a guest state
-                        await axios.put('http://localhost:3000/currentUser', { id: null, role: 'guest' });
-                        // Redirect to login page
-                        window.location.href = '/login.html';
+                        await axios.put('http://localhost:3000/currentUser', { id: null, position: 'guest' });
+                        window.location.href = '/login/login.html';
                     } catch (error) {
                         console.error('Erreur lors de la déconnexion:', error);
                     }
@@ -162,9 +176,10 @@
 
         } catch (error) {
             console.error('Erreur lors de la vérification de l\'utilisateur:', error);
-            // If there's an error fetching the user (e.g., server down), redirect to login
             if (!window.location.pathname.includes('login.html')) {
                 window.location.href = '/login.html';
             }
         }
     });
+
+
