@@ -1,0 +1,341 @@
+{
+  "admin": {
+    "id": 1,
+    "name": "Raven Reyes",
+    "email": "raven.reyes@gmail.com",
+    "password": "Raven934",
+    "position": "admin"
+  },
+  "currentUser": {
+    "id": "4",
+    "name": "Sophie Bernard",
+    "email": "sophie.bernard@exemple.com",
+    "position": "Analyste"
+  },
+  "employees": [
+    {
+      "id": "1",
+      "name": "Jean Dupont",
+      "email": "jean.dupont@exemple.com",
+      "password": "Jean934",
+      "position": "Développeur",
+      "avatar": "admin/Open Peeps - Avatar (1).png"
+    },
+    {
+      "id": "2",
+      "name": "Marie Martin",
+      "email": "marie.martin@exemple.com",
+      "password": "Marie934",
+      "position": "Chef de projet",
+      "avatar": "admin/Open Peeps - Avatar (3).png"
+    },
+    {
+      "id": "3",
+      "name": "Pierre Durand",
+      "email": "pierre.durand@exemple.com",
+      "password": "Pierre934",
+      "position": "Designer",
+      "avatar": "admin/Open Peeps - Avatar (4).png"
+    },
+    {
+      "id": "4",
+      "name": "Sophie Bernard",
+      "email": "sophie.bernard@exemple.com",
+      "password": "Sophie934",
+      "position": "Analyste",
+      "avatar": "admin/Open Peeps - Avatar.png"
+    }
+  ],
+  "requests": [
+    {
+      "id": "1",
+      "type": "Payé",
+      "startDate": "2025-12-23",
+      "endDate": "2025-12-31",
+      "status": "Refusé",
+      "employeeId": 1,
+      "requestDate": "2025-09-01",
+      "reason": "Congés de fin d'année"
+    },
+    {
+      "id": "2",
+      "type": "Maladie",
+      "startDate": "2025-08-01",
+      "endDate": "2025-08-03",
+      "status": "Approuvé",
+      "employeeId": 1,
+      "requestDate": "2025-07-30",
+      "reason": "Grippe saisonnière"
+    },
+    {
+      "id": "3",
+      "type": "Personnel",
+      "startDate": "2025-10-15",
+      "endDate": "2025-10-16",
+      "status": "Refusé",
+      "employeeId": 1,
+      "requestDate": "2025-09-08",
+      "reason": "Rendez-vous médical important"
+    },
+    {
+      "id": "4",
+      "type": "Payé",
+      "startDate": "2025-07-01",
+      "endDate": "2025-07-14",
+      "status": "Approuvé",
+      "employeeId": 1,
+      "requestDate": "2025-06-15",
+      "reason": "Vacances d'été - période de forte activité"
+    },
+    {
+      "id": "5",
+      "type": "Personnel",
+      "startDate": "2025-11-25",
+      "endDate": "2025-11-25",
+      "status": "Approuvé",
+      "employeeId": 1,
+      "requestDate": "2025-09-05",
+      "reason": "Déménagement personnel"
+    },
+    {
+      "id": "6",
+      "type": "Maladie",
+      "startDate": "2025-06-20",
+      "endDate": "2025-06-24",
+      "status": "Refusé",
+      "employeeId": 1,
+      "requestDate": "2025-06-19",
+      "reason": "Mal de tête - certificat médical manquant"
+    },
+    {
+      "id": "7",
+      "type": "Payé",
+      "startDate": "2025-05-01",
+      "endDate": "2025-05-05",
+      "status": "Approuvé",
+      "employeeId": 1,
+      "requestDate": "2025-04-10",
+      "reason": "Pont du 1er mai - vacances familiales"
+    },
+    {
+      "id": "8",
+      "type": "Payé",
+      "startDate": "2025-09-30",
+      "endDate": "2025-10-01",
+      "status": "Refusé",
+      "employeeId": 1,
+      "requestDate": "2025-09-09",
+      "reason": "Affaires personnelles urgentes"
+    },
+    {
+      "id": "9",
+      "type": "Maladie",
+      "startDate": "2025-11-05",
+      "endDate": "2025-11-07",
+      "status": "Approuvé",
+      "employeeId": 2,
+      "requestDate": "2025-09-05",
+      "reason": "Je ne me sens pas bien"
+    },
+    {
+      "id": "10",
+      "type": "Maladie",
+      "startDate": "2025-11-15",
+      "endDate": "2025-11-16",
+      "status": "Refusé",
+      "employeeId": 2,
+      "requestDate": "2025-09-09",
+      "reason": "Affaires personnelles"
+    },
+    {
+      "id": "11",
+      "type": "Personnel",
+      "startDate": "2025-01-22",
+      "endDate": "2025-01-24",
+      "status": "Refusé",
+      "employeeId": 2,
+      "requestDate": "2025-01-08",
+      "reason": "Congé parental"
+    },
+    {
+      "id": "12",
+      "type": "Personnel",
+      "startDate": "2025-11-15",
+      "endDate": "2025-11-16",
+      "status": "Approuvé",
+      "employeeId": 2,
+      "requestDate": "2025-09-09",
+      "reason": "Affaires personnelles"
+    },
+    {
+      "id": "13",
+      "type": "Personnel",
+      "startDate": "2025-01-22",
+      "endDate": "2025-01-24",
+      "status": "En attente",
+      "employeeId": 2,
+      "requestDate": "2025-01-08",
+      "reason": "Congé parental"
+    },
+    {
+      "id": "14",
+      "type": "Personnel",
+      "startDate": "2025-05-20",
+      "endDate": "2025-05-21",
+      "status": "En attente",
+      "employeeId": 2,
+      "requestDate": "2025-04-20",
+      "reason": "Congé personnel"
+    },
+    {
+      "id": "15",
+      "type": "Payé",
+      "startDate": "2025-12-18",
+      "endDate": "2025-12-22",
+      "status": "Approuvé",
+      "employeeId": 3,
+      "requestDate": "2025-09-01",
+      "reason": "Congés de fin d'année"
+    },
+    {
+      "id": "16",
+      "type": "Payé",
+      "startDate": "2025-07-15",
+      "endDate": "2025-07-25",
+      "status": "Approuvé",
+      "employeeId": 3,
+      "requestDate": "2025-06-10",
+      "reason": "Voyage familial"
+    },
+    {
+      "id": "17",
+      "type": "Payé",
+      "startDate": "2025-02-10",
+      "endDate": "2025-02-17",
+      "status": "Approuvé",
+      "employeeId": 3,
+      "requestDate": "2025-01-15",
+      "reason": "Formation externe"
+    },
+    {
+      "id": "18",
+      "type": "Payé",
+      "startDate": "2025-06-10",
+      "endDate": "2025-06-12",
+      "status": "Refusé",
+      "employeeId": 4,
+      "requestDate": "2025-05-15",
+      "reason": "Vacances de printemps"
+    },
+    {
+      "id": "19",
+      "type": "Payé",
+      "startDate": "2025-04-08",
+      "endDate": "2025-04-15",
+      "status": "Approuvé",
+      "employeeId": 4,
+      "requestDate": "2025-03-12",
+      "reason": "Vacances d'été"
+    },
+    {
+      "id": "20",
+      "type": "Maladie",
+      "startDate": "2025-09-20",
+      "endDate": "2025-09-23",
+      "reason": "hwoafhpwa;",
+      "employeeId": 1,
+      "status": "Refusé",
+      "requestDate": "2025-09-12"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "1",
+      "userId": 1,
+      "message": "Votre demande de congé a été approuvée.",
+      "read": false
+    },
+    {
+      "id": "2",
+      "userId": 2,
+      "message": "Nouvelle demande de congé de Jean Dupont.",
+      "read": true
+    },
+    {
+      "id": "3",
+      "userId": 3,
+      "message": "Votre demande de congé a été Refusésée.",
+      "read": false
+    },
+    {
+      "id": "4",
+      "userId": 1,
+      "message": "Rappel: Soumettez vos congés avant le 15 novembre.",
+      "read": false
+    }
+  ],
+  "annonces": [
+    {
+      "id": "1",
+      "title": "⚠ Avis de fermeture !!",
+      "content": "Veuillez noter que l'entreprise fermera ses portes pour maintenance à partir du <strong>2 septembre 2025</strong>. Veuillez vous assurer de planifier vos congés à l'avance."
+    },
+    {
+      "id": "2",
+      "title": "🎉 Nouvelle politique de congés !!",
+      "content": "À partir du <strong>1er octobre 2025</strong>, tous les employés bénéficieront de <strong>5 jours de congés supplémentaires</strong> par an. Consultez votre gestionnaire RH pour plus de détails."
+    },
+    {
+      "id": "3",
+      "title": "📅 Rappel important !!",
+      "content": "La date limite pour soumettre vos demandes de congés pour la période des fêtes est le <strong>15 novembre 2025</strong>. Aucune demande ne sera acceptée après cette date."
+    }
+  ],
+  "entitlements": [
+    {
+      "type": "Payé",
+      "total": 20,
+      "id": "5e4f"
+    },
+    {
+      "type": "Maladie",
+      "total": 10,
+      "id": "7e12"
+    },
+    {
+      "type": "Personnel",
+      "total": 8,
+      "id": "77ba"
+    }
+  ],
+  "events": [
+    {
+      "id": "1",
+      "name": "Congés d'hiver",
+      "startDate": "2026-01-10",
+      "endDate": "2026-01-30",
+      "type": "Payé"
+    },
+    {
+      "id": "2",
+      "name": "10e anniversaire",
+      "startDate": "2026-05-17",
+      "endDate": "2026-05-20",
+      "type": "Personnel"
+    },
+    {
+      "id": "3",
+      "name": "Team building",
+      "startDate": "2025-10-05",
+      "endDate": "2025-10-06",
+      "type": "Payé"
+    },
+    {
+      "id": "4",
+      "name": "Formation interne",
+      "startDate": "2025-11-12",
+      "endDate": "2025-11-12",
+      "type": "Payé"
+    }
+  ]
+}

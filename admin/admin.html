@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>FlexiDays - Administration</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Itim&display=swap"
+      rel="stylesheet"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="../shared.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+   <header>
+        <div class="logo">FlexiDays.</div>
+       <nav>
+            <a href="../dashboard/Dashboard.html" class="active">Tableau de bord</a>
+            <a href="../myleaves/leaves.html">Mes congés</a>
+            <a href="../requests/demand.html">Demande de congé</a>
+            <a href="../admin/admin.html">Administration</a>
+        </nav>
+        <div class="icons">
+            <div class="avatar-wrapper">
+                <button id="avatarBtn" class="avatar-btn" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-user"></i>
+                </button>
+                <div id="avatarPanel" class="avatar-panel" hidden>
+                    <div class="avatar-header">
+                        <div class="avatar-circle"><i class="fa-solid fa-user"></i></div>
+                        <div class="avatar-info">
+                            <h6 id="avatarName">Jean Dupont</h6>
+                            <p id="avatarEmail">jean.dupont@exemple.com</p>
+                        </div>
+                    </div>
+                    <ul class="avatar-menu" id="avatarMenu">
+                        <li data-action="profile"><i class="fa-solid fa-id-card"></i> Mon profil</li>
+                        <li data-action="settings"><i class="fa-solid fa-gear"></i> Paramètres</li>
+                        <li data-action="history"><i class="fa-solid fa-clock"></i> Historique</li>
+                        <li data-action="help"><i class="fa-solid fa-question-circle"></i> Aide</li>
+                        <li class="danger" id="logout"><i class="fa-solid fa-sign-out-alt"></i> Déconnexion</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="notif-wrapper">
+                <button id="notifBtn" class="notif-btn" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-bell"></i>
+                    <span id="notifBadge" class="notif-badge" hidden>0</span>
+                </button>
+                <div id="notifPanel" class="notif-panel" hidden>
+                    <div class="notif-panel-header">
+                        <span>Notifications</span>
+                        <button id="markAllRead" class="mark-all">Tout marquer lu</button>
+                    </div>
+                    <ul id="notifList" class="notif-list"></ul>
+                    <div class="notif-footer"><button id="viewAllNotifs" class="view-all">Voir tout</button></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="container-fluid px-4 py-4">
+        <div class="page-header mb-4">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <h1 class="page-title">Gestion des congés</h1>
+              <p class="page-subtitle text-muted">
+                Gérez toutes les demandes de congés des employés
+              </p>
+            </div>
+            <div class="col-md-4 text-md-end">
+              <div class="btn-group" role="group">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-filter"
+                >
+                  <i class="fa-solid fa-filter me-2"></i>Filtrer
+                </button>
+                <button type="button" class="btn btn-primary btn-export">
+                  <i class="fa-solid fa-download me-2"></i>Exporter
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-section mb-5">
+          <div class="row g-4">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="stat-card stat-pending">
+                <div class="stat-icon">
+                  <i class="fa-regular fa-clock"></i>
+                </div>
+                <div class="stat-content">
+                  <div class="stat-label">En attente</div>
+                  <div class="stat-number">12</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="stat-card stat-approved">
+                <div class="stat-icon">
+                  <i class="fa-solid fa-check"></i>
+                </div>
+                <div class="stat-content">
+                  <div class="stat-label">Approuvées</div>
+                  <div class="stat-number">45</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="stat-card stat-rejected">
+                <div class="stat-icon">
+                  <i class="fa-solid fa-times"></i>
+                </div>
+                <div class="stat-content">
+                  <div class="stat-label">Refusées</div>
+                  <div class="stat-number">3</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="stat-card stat-total">
+                <div class="stat-icon">
+                  <i class="fa-regular fa-calendar"></i>
+                </div>
+                <div class="stat-content">
+                  <div class="stat-label">Total ce mois</div>
+                  <div class="stat-number">60</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="requests-section">
+          <div class="section-header mb-4">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <h2 class="section-title">Demandes de congés</h2>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex gap-3 justify-content-md-end">
+                  <select class="form-select status-filter">
+                    <option value="">Tous les statuts</option>
+                    <option value="pending">En attente</option>
+                    <option value="approved">Approuvées</option>
+                    <option value="rejected">Refusées</option>
+                  </select>
+                  <div class="search-box">
+                    <i class="fa-solid fa-search"></i>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Rechercher un employé..."
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4" id="requests-container">
+            <!-- Les demandes de congés seront chargées ici par JavaScript -->
+          </div>
+
+         
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Gestion RH</h3>
+          <p>
+            Simplifier la gestion des congés des employés et les processus RH
+            pour les entreprises modernes.
+          </p>
+          <div class="social-links">
+            <a href="facebook"><i class="fab fa-facebook"></i></a>
+            <a href="twitter"><i class="fab fa-twitter"></i></a>
+            <a href="linkedin"><i class="fab fa-linkedin"></i></a>
+            <a href="instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h3>Liens rapides</h3>
+          <ul>
+            <li><a href="../dashboard/dashboard.html">Tableau de bord</a></li>
+            <li><a href="../myleaves/leaves.html">Mes congés</a></li>
+            <li><a href="../requests/demand.html">Demandes de congé</a></li>
+            <li><a href="../admin/admin.html">Administration</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="help">Centre d'aide</a></li>
+            <li><a href="guide">Guide utilisateur</a></li>
+            <li><a href="contact">Contacter le support</a></li>
+            <li><a href="issue">Signaler un problème</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h3>Informations de contact</h3>
+          <div class="contact-info">
+            <p>
+              <i class="fas fa-map-marker-alt"></i> Situé au 109, boulevard
+              Abdelmoumen, 20042 Casablanca.
+            </p>
+            <p><i class="fas fa-phone"></i> +212 6567839878</p>
+            <p><i class="fas fa-envelope"></i> info@flexidays.com</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 FlexiDays. Tous droits réservés. |
+          <a href="#">Politique de confidentialité</a> |
+          <a href="#">Conditions d'utilisation</a>
+        </p>
+      </div>
+    </footer>
+    <script src="../shared.js"></script>
+    <script src="admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+body.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f4f8;
+    background-image: linear-gradient(to bottom right, #e0e8f0, #f8fafc);
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2rem;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.login-box {
+    background-color: #ffffff;
+    padding: 2.5rem 3rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 90, 100, 0.1);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    border-top: 5px solid #006A71;
+    animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.login-header h2 {
+    color: #004d54;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.login-header p {
+    color: #5a7a8c;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 500;
+    color: #124c53;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.input-group label i {
+    margin-right: 8px;
+    color: #007a85;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #cddce5;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    transition: all 0.3s ease;
+    font-family: 'Itim', cursive;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #006A71;
+    box-shadow: 0 0 0 3px rgba(0, 106, 113, 0.2);
+}
+
+.login-options {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.remember-me input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: #006A71;
+}
+
+.forgot-password {
+    color: #006A71;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: #004d54;
+    text-decoration: underline;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 0.9rem;
+    background-color: #006A71;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+.btn-login:hover {
+    background-color: #004d54;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 77, 84, 0.2);
+}
+
+.login-footer {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #5a7a8c;
+}
+
+.login-footer a {
+    color: #006A71;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-box {
+        padding: 2rem;
+    }
+    .login-header h2 {
+        font-size: 1.8rem;
+    }
+    .login-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+}
